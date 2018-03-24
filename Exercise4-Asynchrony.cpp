@@ -55,7 +55,7 @@ void async_send(void* buf, int sz, MPI_Datatype type, int to, int tag, MPI_Comm 
         MPI_Pack(buf, sz, type, buffers[curr_pos], BUFSZ, &position, communicator);
         MPI_Request r;
         MPI_Issend(buffers[curr_pos], size, MPI_PACKED, to, tag, communicator, &r);
-        requests.emplace_back(std::pair<int, MPI_Request>(curr_pos, r));
+        requests.emplace_back(curr_pos, r);
         curr_pos++;
         if (curr_pos == ASYNC_GRADE) curr_pos = 0;
         curr_async++;
