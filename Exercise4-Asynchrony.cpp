@@ -2,6 +2,19 @@
 // Created by Orlando Leombruni on 24/03/2018.
 //
 
+// This program implements a K-asynchronous communication between two processes.
+// The async_send function keeps K buffers in memory, freeing them as soon as
+// they're not needed anymore. (Here, K is defined as ASYNC_GRADE = 3.)
+//
+// The main function for process rank 0 tries to send six times the same buffer,
+// which is an integer that gets increased as soon as one "send" completes.
+// Process rank 1 waits for a second and then performs six "receive"s; so, rank 0
+// can send three times before blocking (on the fourth "send"), then as soon as
+// rank 1 performs the first four "receive"s, it can send another two times.
+//
+// For convenience, the async_send function outputs to stdout whether the current
+// operation is being performed asynchronously or synchronously.
+
 #include <mpi.h>
 #include <vector>
 #include <iostream>
